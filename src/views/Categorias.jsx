@@ -7,7 +7,7 @@ const Categorias = () => {
     <Container className="mt-3">
       <Row className="align-items-center">
         <Col>
-          <h2 className="mb-0 use-full me-2">Categorías</h2>
+          <h2 className="bi-house-fill me-2">Categorías</h2>
         </Col>
       </Row>
     </Container>
