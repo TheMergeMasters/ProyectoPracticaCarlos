@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { supabase } from "../database/supabaseconfig";
 import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
 import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria";
-import TablaCategorias from "../components/categorias/TablaCategorias";
 import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
+import TablaCategorias from "../components/categorias/TablaCategorias";
 import NotificacionOperacion from "../components/NotificacionOperacion";
 
 const Categorias = () => {
@@ -49,7 +49,7 @@ const Categorias = () => {
           descripcion_categoria:
             item.descripcion_categoria ?? item.descripcion ?? "",
           nombre_categoria: item.nombre_categoria ?? item.nombre ?? "",
-        }))
+        })),
       );
     } catch (err) {
       console.error("Excepción al cargar categorías:", err.message);
@@ -189,14 +189,15 @@ const Categorias = () => {
         return;
       }
 
+      setMostrarModalEdicion(false);
+
+      await cargarCategorias();
+
       setToast({
         mostrar: true,
         mensaje: `Categoría "${categoriaEditar.nombre_categoria}" actualizada exitosamente.`,
         tipo: "exito",
       });
-
-      await cargarCategorias();
-      setMostrarModalEdicion(false);
     } catch (err) {
       console.error("Excepción al actualizar categoría:", err.message);
       setToast({
@@ -204,14 +205,15 @@ const Categorias = () => {
         mensaje: "Error inesperado al actualizar categoría.",
         tipo: "error",
       });
+      console.error("Error al actualizar categoría:", err.message);
     }
   };
 
   const eliminarCategoria = async () => {
+    if (!categoriaAEliminar) return;
     try {
-      if (!categoriaAEliminar) return;
-
-      const { data, error } = await supabase
+      setMostrarModalEliminacion(false);
+      const { error } = await supabase
         .from("categorias")
         .delete()
         .eq("id_categoria", categoriaAEliminar.id_categoria)
@@ -221,21 +223,18 @@ const Categorias = () => {
         console.error("Error al eliminar categoría:", error.message);
         setToast({
           mostrar: true,
-          mensaje: "Error al eliminar categoría.",
+          mensaje: `Error al eliminar categoría "${categoriaAEliminar.nombre_categoria}": ${error.message}`,
           tipo: "error",
         });
         return;
       }
 
+      await cargarCategorias();
       setToast({
         mostrar: true,
         mensaje: `Categoría "${categoriaAEliminar.nombre_categoria}" eliminada exitosamente.`,
         tipo: "exito",
       });
-
-      await cargarCategorias();
-      setMostrarModalEliminacion(false);
-      setCategoriaAEliminar(null);
     } catch (err) {
       console.error("Excepción al eliminar categoría:", err.message);
       setToast({
@@ -243,6 +242,7 @@ const Categorias = () => {
         mensaje: "Error inesperado al eliminar categoría.",
         tipo: "error",
       });
+      console.error("Error al eliminar categoría:", err.message);
     }
   };
 
@@ -299,19 +299,19 @@ const Categorias = () => {
 
       {/* Modal de Edición */}
       <ModalEdicionCategoria
-        mostrarModal={mostrarModalEdicion}
-        setMostrarModal={setMostrarModalEdicion}
+        mostrarModalEdicion={mostrarModalEdicion}
+        setMostrarModalEdicion={setMostrarModalEdicion}
         categoriaEditar={categoriaEditar}
-        manejoCambioInput={manejoCambioInputEdicion}
+        manejoCambioInputEdicion={manejoCambioInputEdicion}
         actualizarCategoria={actualizarCategoria}
       />
 
       {/* Modal de Eliminación */}
       <ModalEliminacionCategoria
-        mostrarModal={mostrarModalEliminacion}
-        setMostrarModal={setMostrarModalEliminacion}
-        categoriaAEliminar={categoriaAEliminar}
+        mostrarModalEliminacion={mostrarModalEliminacion}
+        setMostrarModalEliminacion={setMostrarModalEliminacion}
         eliminarCategoria={eliminarCategoria}
+        categoria={categoriaAEliminar}
       />
 
       {/* Notificación */}
