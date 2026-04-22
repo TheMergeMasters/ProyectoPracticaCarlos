@@ -5,6 +5,7 @@ import ModalRegistroCategoria from "../components/categorias/ModalRegistroCatego
 import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria";
 import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
 import TablaCategorias from "../components/categorias/TablaCategorias";
+import TarjetaCategoria from "../components/categorias/TarjetaCategoria";
 import NotificacionOperacion from "../components/NotificacionOperacion";
 
 const Categorias = () => {
@@ -41,6 +42,7 @@ const Categorias = () => {
           mensaje: "Error al cargar categorías.",
           tipo: "error",
         });
+        
         return;
       }
       setCategorias(
@@ -275,18 +277,30 @@ const Categorias = () => {
         </Row>
       )}
 
-      {/* Lista de categorías cargadas */}
-      {!cargando && categorias.length > 0 && (
-        <Row>
-          <Col lg={12}>
-            <TablaCategorias
-              categorias={categorias}
-              abrirModalEdicion={abrirModalEdicion}
-              abrirModalEliminacion={abrirModalEliminacion}
-            />
-          </Col>
-        </Row>
-      )}
+      <Row>
+        <Col xs={12} sm={12} md={12} className="d-lg-none">
+          <TarjetaCategoria
+            categorias={categorias}
+            abrirModalEdicion={abrirModalEdicion}
+            abrirModalEliminacion={abrirModalEliminacion}
+          />
+        </Col>
+      </Row>
+
+
+      <div className="d-none d-lg-block">
+        {cargando ? (
+          <Spinner animation="border" />
+        ) : categorias.length > 0 ? (
+          <TablaCategorias
+            categorias={categorias}
+            abrirModalEdicion={abrirModalEdicion}
+            abrirModalEliminacion={abrirModalEliminacion}
+          />
+        ) : (
+          <p>No hay categorías.</p>
+        )}
+      </div>
 
       {/* Modal de Registro */}
       <ModalRegistroCategoria

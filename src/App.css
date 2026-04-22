@@ -16,3 +16,43 @@
 .boton-ancho-auto {
   width: auto;
 }
+
+.tarjeta-categoria-contenedor {
+  position: relative;
+  overflow: hidden;
+}
+
+.tarjeta-categoria-cuerpo {
+  transition: opacity 150ms ease;
+}
+
+.tarjeta-categoria-cuerpo-activo {
+  opacity: 0.4;
+}
+
+.tarjeta-categoria-cuerpo-inactivo {
+  opacity: 1;
+}
+
+.tarjeta-categoria-placeholder-imagen {
+  height: 50px;
+  width: 50px;
+}
+
+.tarjeta-categoria-capa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8px;
+}
+
+.tarjeta-categoria-botones-capa {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
