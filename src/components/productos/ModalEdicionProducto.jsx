@@ -35,7 +35,8 @@ const ModalEdicionProducto = ({
       <Modal.Body>
         <Form>
           <Row>
-            <Col xs={12} md={6}>
+
+            <Col xs={12} md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Categoría *</Form.Label>
                 <Form.Select
@@ -54,7 +55,7 @@ const ModalEdicionProducto = ({
               </Form.Group>
             </Col>
 
-            <Col xs={12} md={6}>
+            <Col xs={12} md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Nombre *</Form.Label>
                 <Form.Control
@@ -62,13 +63,12 @@ const ModalEdicionProducto = ({
                   name="nombre_producto"
                   value={productoEditar.nombre_producto || ""}
                   onChange={manejoCambioInputEdicion}
-                  placeholder="Nombre del producto"
                   required
                 />
               </Form.Group>
             </Col>
 
-            <Col xs={12}>
+            <Col xs={12} md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Precio de venta *</Form.Label>
                 <Form.Control
@@ -78,38 +78,53 @@ const ModalEdicionProducto = ({
                   name="precio_venta"
                   value={productoEditar.precio_venta || ""}
                   onChange={manejoCambioInputEdicion}
-                  placeholder="Precio de venta"
                   required
                 />
               </Form.Group>
             </Col>
 
-            <Col xs={12}>
+            <Col xs={12} md={12}>
+              <Form.Group className="mb-3 text-center">
+                <Form.Label>Imagen actual</Form.Label>
+                {productoEditar.url_imagen ? (
+                  <div className="mb-2">
+                    <img
+                      src={productoEditar.url_imagen}
+                      alt="Producto actual"
+                      style={{
+                        maxWidth: "120px",
+                        maxHeight: "120px",
+                        objectFit: "cover",
+                        borderRadius: "6px"
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <p className="text-muted">Sin imagen</p>
+                )}
+              </Form.Group>
+            </Col>
+
+            <Col xs={12} md={12}>
               <Form.Group className="mb-3">
-                <Form.Label>Imagen (opcional)</Form.Label>
+                <Form.Label>Nueva imagen (opcional)</Form.Label>
                 <Form.Control
                   type="file"
                   accept="image/*"
                   onChange={manejoCambioArchivoEdicion}
                 />
-                {productoEditar.url_imagen && (
-                  <div className="mt-2">
-                    <img
-                      src={productoEditar.url_imagen}
-                      alt={productoEditar.nombre_producto}
-                      style={{ width: 120, height: 90, objectFit: "cover" }}
-                    />
-                  </div>
-                )}
+                <Form.Text className="text-muted">
+                  Si seleccionas una nueva imagen, reemplazará la actual
+                </Form.Text>
               </Form.Group>
             </Col>
 
-            <Col xs={12}>
+            <Col xs={12} md={12}>
               <Form.Group className="mb-3">
                 <Form.Label>Descripción</Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={3}
+                  rows={5}
                   name="descripcion_producto"
                   value={productoEditar.descripcion_producto || ""}
                   onChange={manejoCambioInputEdicion}
@@ -117,6 +132,7 @@ const ModalEdicionProducto = ({
                 />
               </Form.Group>
             </Col>
+
           </Row>
         </Form>
       </Modal.Body>
