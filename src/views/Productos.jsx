@@ -22,15 +22,17 @@ const Productos = () => {
   const [mostrarModalEliminacion, setMostrarModalEliminacion] = useState(false);
   const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
 
-  const productosPaginados = productosFiltrados.slice(
-    (paginaActual - 1) * registrosPorPagina,
-    paginaActual * registrosPorPagina
-  );
+  
 
   const [productoAEliminar, setProductoAEliminar] = useState(null);
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });
   const [registrosPorPagina, establecerRegistrosPorPagina] = useState(5);
   const [paginaActual, establecerPaginaActual] = useState(1);
+
+  const productosPaginados = productosFiltrados.slice(
+    (paginaActual - 1) * registrosPorPagina,
+    paginaActual * registrosPorPagina
+  );
 
   const [nuevoProducto, setNuevoProducto] = useState({
     nombre_producto: "",
@@ -328,7 +330,7 @@ const Productos = () => {
       if (error) throw error;
 
       await cargarProductos();
-      setToast({ mostrar: true, mensaje: `Producto "${productoAEliminar.nombre_producto}" eliminado`, tipo: "exito" });
+      setToast({ mostrar: true, mensaje: `producto "${productoAEliminar.nombre_producto}" eliminado`, tipo: "exito" });
     } catch (err) {
       console.error("Error al eliminar producto:", err);
       setToast({ mostrar: true, mensaje: "Error al eliminar producto", tipo: "error" });
@@ -368,25 +370,23 @@ const Productos = () => {
 
       <Row>
 
-        <Col xs={12} sm={12} md={12} className="d-lg-none">
+      <Col xs={12} sm={12} md={12} className="d-lg-none">
         <TarjetaProducto
           productos={productosPaginados}
-          categorias={categorias}
-          cargando={cargando}
           abrirModalEdicion={abrirModalEdicion}
           abrirModalEliminacion={abrirModalEliminacion}
         />
       </Col>
 
-        <Col>
-          <TablaProductos
-            productos={productosFiltrados.slice((paginaActual - 1) * registrosPorPagina, paginaActual * registrosPorPagina)}
-            categorias={categorias}
-            cargando={cargando}
-            abrirModalEdicion={abrirModalEdicion}
-            abrirModalEliminacion={abrirModalEliminacion}
-          />
-        </Col>
+        <Col lg={12} className="d-none d-lg-block">
+            <TablaProductos
+              productos={productosPaginados}
+              categorias={categorias}
+              cargando={cargando}
+              abrirModalEdicion={abrirModalEdicion}
+              abrirModalEliminacion={abrirModalEliminacion}
+            />
+          </Col>
       </Row>
 
 
