@@ -56,3 +56,48 @@
   padding: 6px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
+
+
+.tarjeta-empleado-contenedor {
+  position: relative;
+  cursor: pointer;
+}
+
+.tarjeta-empleado-cuerpo {
+  transition: opacity 150ms ease;
+}
+
+.tarjeta-empleado-cuerpo-activo {
+  opacity: 0.4;
+}
+
+.tarjeta-empleado-cuerpo-inactivo {
+  opacity: 1;
+}
+
+.tarjeta-empleado-placeholder-imagen {
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+}
+
+.tarjeta-empleado-capa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.tarjeta-empleado-botones-capa {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
