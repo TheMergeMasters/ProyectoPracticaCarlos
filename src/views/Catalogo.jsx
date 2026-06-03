@@ -19,8 +19,7 @@ const Catalogo = () => {
       setCargando(true);
       const [resProductos, resCategorias] = await Promise.all([
         supabase
-          .from('productos')
-          .select('*')
+          .from('pr-*')
           .order('nombre_producto', { ascending: true }),
         supabase
           .from('categorias')
