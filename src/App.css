@@ -101,3 +101,91 @@
   padding: 6px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
+
+
+.tarjeta-cliente-contenedor {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.tarjeta-cliente-cuerpo {
+  transition: opacity 150ms ease;
+}
+
+.tarjeta-cliente-cuerpo-activo {
+  opacity: 0.4;
+}
+
+.tarjeta-cliente-cuerpo-inactivo {
+  opacity: 1;
+}
+
+.tarjeta-cliente-placeholder-imagen {
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+  text-align: center;
+}
+
+.tarjeta-cliente-capa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8px;
+}
+
+.tarjeta-cliente-botones-capa {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+
+.tarjeta-venta-contenedor {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.tarjeta-venta-cuerpo {
+  transition: opacity 150ms ease;
+}
+
+.tarjeta-venta-cuerpo-activo {
+  opacity: 0.4;
+}
+
+.tarjeta-venta-cuerpo-inactivo {
+  opacity: 1;
+}
+
+.tarjeta-venta-placeholder-imagen {
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+  text-align: center;
+}
+
+.tarjeta-venta-capa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8px;
+}
+
+.tarjeta-venta-botones-capa {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}

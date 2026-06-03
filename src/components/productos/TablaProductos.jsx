@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Spinner, Button } from "react-bootstrap";
 
-const TablaProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEliminacion, cargando }) => {
+const TablaProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEliminacion, cargando, generarPDFProducto, }) => {
 
   const obtenerNombreCategoria = (id) => {
     const cat = categorias?.find((c) => c.id_categoria === id);
@@ -47,6 +47,14 @@ const TablaProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEl
                   </Button>
                   <Button variant="outline-danger" size="sm" onClick={() => abrirModalEliminacion && abrirModalEliminacion(p)}>
                     <i className="bi bi-trash"></i>
+                  </Button>
+                  <Button
+                    variant="outline-info"
+                    size="sm"
+                    className="m-1"
+                    onClick={() => generarPDFProducto && generarPDFProducto(p, categorias)}
+                  >
+                    <i className="bi bi-file-earmark-pdf"></i>
                   </Button>
                 </td>
               </tr>
