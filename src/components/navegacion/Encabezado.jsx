@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import logo from "../../assets/logo.png";
 import { supabase } from "../../database/supabaseconfig";
+import ChatIA from "../ia/ChatIA";
 
 const Encabezado = () => {
   const [mostrarMenu, setMostrarMenu] = useState(false);
@@ -10,6 +11,8 @@ const Encabezado = () => {
   const location = useLocation(); // Para detectar la ruta actual
 
   const manejarToggle = () => setMostrarMenu(!mostrarMenu);
+
+  const [mostrarChatIA, setMostrarChatIA] = useState(false);
 
   const manejarNavegacion = (ruta) => {
     navigate(ruta);
@@ -125,6 +128,13 @@ const Encabezado = () => {
               <strong>Ventas</strong>
             </Nav.Link>
 
+            <Nav.Link
+              onClick={() => setMostrarChatIA(true)}
+              className="text-white"
+            >
+              <i className="bi bi-robot me-2"></i>
+            </Nav.Link>
+
           {/* Ícono cerrar sesión en barra superior */}
           {mostrarMenu ? null : (
             <Nav.Link
@@ -206,6 +216,9 @@ const Encabezado = () => {
 
           <Offcanvas.Body>{contenidoMenu}</Offcanvas.Body>
         </Navbar.Offcanvas>
+
+        {/* Modal ChatIA */}
+        <ChatIA mostrar={mostrarChatIA} onCerrar={() => setMostrarChatIA(false)} />
       </Container>
     </Navbar>
   );

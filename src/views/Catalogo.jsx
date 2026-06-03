@@ -20,6 +20,7 @@ const Catalogo = () => {
       const [resProductos, resCategorias] = await Promise.all([
         supabase
           .from('productos')
+          .select('*')
           .order('nombre_producto', { ascending: true }),
         supabase
           .from('categorias')
@@ -89,7 +90,7 @@ const Catalogo = () => {
 
   return (
 
-    <div className="mt-3 px-1">
+    <Container className="mt-3 px-1">
 
       <Row className="text-center mb-1">
         <Col>
@@ -158,7 +159,7 @@ const Catalogo = () => {
         </Row>
       )}
 
-    </div>
+    </Container>
 
   );
 
