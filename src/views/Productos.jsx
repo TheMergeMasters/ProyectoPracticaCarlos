@@ -11,7 +11,7 @@ import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import TarjetaProducto from "../components/productos/TarjetaProducto";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
+import ModalQRProducto from "../components/productos/ModalQRProducto";
 
 
 const Productos = () => {
@@ -415,6 +415,70 @@ const Productos = () => {
   doc.save(`Producto_${producto.id_producto}.pdf`);
 };
 
+
+const [mostrarModalQR, setMostrarModalQR] = useState(false);
+const [productoQR, setProductoQR] = useState(null);
+
+const generarQRImagen = (producto) => {
+    if (!producto?.url_imagen) {
+        setToast({
+            mostrar: true,
+            mensaje: "Este producto no tiene imagen asociada",
+            tipo: "advertencia"
+        });
+        return;
+    }
+
+    setProductoQR(producto);
+    setMostrarModalQR(true);
+};
+
+const obtenerNombreCategoria = (id) => {
+  const cat = categorias?.find((c) => c.id_categoria === id);
+  return cat ? cat.nombre_categoria : id;
+};
+
+const copiarProducto = async (producto) => {
+    if (!producto) return;
+
+    const texto = `
+ID: ${producto.id_producto}
+Nombre: ${producto.nombre_producto}
+Categoría: ${obtenerNombreCategoria(producto.categoria_producto)}
+Precio: $${Number(producto.precio_venta).toFixed(2)}
+Descripción: ${producto.descripcion_producto || 'Sin descripción'}`;
+
+    try {
+        // Intenta con la API moderna primero
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(texto);
+        } else {
+            // Fallback para navegadores más antiguos
+            const textArea = document.createElement("textarea");
+            textArea.value = texto;
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+        }
+
+        setToast({
+            mostrar: true,
+            mensaje: `Producto "${producto.nombre_producto}" copiado al portapapeles`,
+            tipo: "exito",
+        });
+    } catch (err) {
+        console.error("Error al copiar:", err);
+        setToast({
+            mostrar: true,
+            mensaje: "No se pudo copiar al portapapeles",
+            tipo: "error",
+        });
+    }
+};
+
   return (
     <Container className="mt-3">
 
@@ -453,6 +517,7 @@ const Productos = () => {
           productos={productosPaginados}
           abrirModalEdicion={abrirModalEdicion}
           abrirModalEliminacion={abrirModalEliminacion}
+          copiarProducto={copiarProducto}
         />
       </Col>
 
@@ -463,7 +528,9 @@ const Productos = () => {
               cargando={cargando}
               abrirModalEdicion={abrirModalEdicion}
               abrirModalEliminacion={abrirModalEliminacion}
-              generarPDFProducto={(prod) => generarPDFProducto(prod, categorias)} 
+              generarPDFProducto={(prod) => generarPDFProducto(prod, categorias)}
+              generarQRImagen={generarQRImagen}
+              copiarProducto={copiarProducto}
             />
           </Col>
       </Row>
@@ -517,6 +584,13 @@ const Productos = () => {
         productoAEliminar={productoAEliminar}
         eliminarProducto={eliminarProducto}
       />
+
+
+      <ModalQRProducto
+    mostrar={mostrarModalQR}
+    onHide={() => setMostrarModalQR(false)}
+    producto={productoQR}
+/>
     </Container>
   );
 };

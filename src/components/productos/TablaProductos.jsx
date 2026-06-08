@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Spinner, Button } from "react-bootstrap";
 
-const TablaProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEliminacion, cargando, generarPDFProducto, }) => {
+const TablaProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEliminacion, cargando, generarPDFProducto, generarQRImagen, copiarProducto }) => {
 
   const obtenerNombreCategoria = (id) => {
     const cat = categorias?.find((c) => c.id_categoria === id);
@@ -56,6 +56,24 @@ const TablaProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEl
                   >
                     <i className="bi bi-file-earmark-pdf"></i>
                   </Button>
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    className="m-1"
+                    onClick={() => generarQRImagen && generarQRImagen(p)}
+                    title="Generar código QR de la imagen"
+                  >
+                    <i className="bi bi-qr-code"></i>
+                  </Button>
+                  <Button
+    variant="outline-success"
+    size="sm"
+    className="m-1"
+    onClick={() => copiarProducto(p)}
+    title="Copiar al portapapeles"
+>
+    <i className="bi bi-clipboard"></i>
+</Button>
                 </td>
               </tr>
             ))}
